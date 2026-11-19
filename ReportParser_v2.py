@@ -275,7 +275,7 @@ def parse(filename=None):
         results['hash'] = ''
         results['sample'] = ''
         results['inSAA'] = ''
-
+        results['joint_event'] = ''
 
         # Set the targeted search version
         results['targeted_search_version'] = 'v2'
@@ -294,6 +294,11 @@ def parse(filename=None):
         else:
             inSAA = False  
             results['inSAA'] = 'False'
+
+        if 'Joint Event' in subject:
+            joint_event = True
+            results['joint_event'] = 'True'
+            print("\nPossible Joint Event")
 
         print("Parsing message body...")
 
