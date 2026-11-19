@@ -14,11 +14,13 @@ shopt -s nullglob dotglob
 for message in "$queueDirectory"/*.msg; do
     [[ -f "$message" ]] || continue
 
+    # Extract the base name of the message file and construct the corresponding log file path
     message_basename=${message##*/}
     logfile="$logDirectory/${message_basename%.msg}.log"
 
     printf 'Processing %s (log: %s)\n' "$message" "$logfile"
 
+    # Run the parser and handle its exit status
     if "$python" "$parser" "$message" > "$logfile" 2>&1; then
         rm -- "$message" || exit $?
     else
