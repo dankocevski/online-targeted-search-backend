@@ -298,7 +298,7 @@ def parse(filename=None):
         if 'Joint Event' in subject:
             joint_event = True
             results['joint_event'] = 'True'
-            print("\nPossible Joint Event")
+            print("\nPossible Joint Event!\n")
 
         print("Parsing message body...")
 
