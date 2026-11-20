@@ -164,70 +164,72 @@ def parse(filename=None):
     # Parse the status messages
     if '[GBM pipeline alerts]' in subject:
 
-        results = {}
+        #### Commenting out job status updates for now ####
 
-        # Parse the email line by line
-        for line in lines:
+        # results = {}
 
-            # Get the event name
-            if 'name = ' in line:
-                event_id = line.split()[2]
-                results['event_id'] = event_id
+        # # Parse the email line by line
+        # for line in lines:
 
-            # Get the job ID
-            if 'id = ' in line:
-                job_id = line.split()[2]
-                results['hash'] = job_id
+        #     # Get the event name
+        #     if 'name = ' in line:
+        #         event_id = line.split()[2]
+        #         results['event_id'] = event_id
 
-            # Get the job status
-            if 'status = ' in line:
-                status = line.split()[2]
+        #     # Get the job ID
+        #     if 'id = ' in line:
+        #         job_id = line.split()[2]
+        #         results['hash'] = job_id
 
-            # Get the trigger date and time
-            if 'event time = ' in line:
-                date = line.split()[3]
-                time = line.split()[4]
-                results['trigger_date'] = date
-                results['trigger_time'] = time 
+        #     # Get the job status
+        #     if 'status = ' in line:
+        #         status = line.split()[2]
 
-                # Get the associated MET
-                trigger_met = computeMET(date, time, return_integer=False)
-                trigger_id = computeMET(date, time, return_integer=True)
-                results['trigger_met'] = trigger_met
-                results['trigger_id'] = trigger_id
+        #     # Get the trigger date and time
+        #     if 'event time = ' in line:
+        #         date = line.split()[3]
+        #         time = line.split()[4]
+        #         results['trigger_date'] = date
+        #         results['trigger_time'] = time 
 
-            # Get the sample name
-            if 'publish = ' in line:
-                sample = line.split()[2]
-                results['sample'] = sample
+        #         # Get the associated MET
+        #         trigger_met = computeMET(date, time, return_integer=False)
+        #         trigger_id = computeMET(date, time, return_integer=True)
+        #         results['trigger_met'] = trigger_met
+        #         results['trigger_id'] = trigger_id
 
-            # Get the time of the message
-            if 'Time job status modified: ' in line:
-                date = '/'.join(line.split()[4].split('-')[1:])
-                time = line.split()[5]
-                time_modified =  date + ' ' + time
+        #     # Get the sample name
+        #     if 'publish = ' in line:
+        #         sample = line.split()[2]
+        #         results['sample'] = sample
+
+        #     # Get the time of the message
+        #     if 'Time job status modified: ' in line:
+        #         date = '/'.join(line.split()[4].split('-')[1:])
+        #         time = line.split()[5]
+        #         time_modified =  date + ' ' + time
 
 
-        # Set the job id and status in the comment field
-        results['comment'] = "Job %s - %s - %s" % (job_id, status, time_modified)
+        # # Set the job id and status in the comment field
+        # results['comment'] = "Job %s - %s - %s" % (job_id, status, time_modified)
 
-        # Set the targeted search version
-        results['targeted_search_version'] = 'v2'
+        # # Set the targeted search version
+        # results['targeted_search_version'] = 'v2'
 
-        print(results)
+        # print(results)
 
-        # Update the database
+        # # Update the database
 
-        if 'SUCCESS' in status:
-            print("\nDeleting trigger from database...")
-            # DatabaseTools.delete(results['trigger_id'], 'Triggers_v2', verbose=True)
-            DatabaseTools.delete('Triggers_v2', comment="Job %s" % job_id, verbose=True)
-        else:
+        # if 'SUCCESS' in status:
+        #     print("\nDeleting trigger from database...")
+        #     # DatabaseTools.delete(results['trigger_id'], 'Triggers_v2', verbose=True)
+        #     DatabaseTools.delete('Triggers_v2', comment="Job %s" % job_id, verbose=True)
+        # else:
 
-            print("\nUpdating trigger database...")
-            DatabaseTools.update(results, 'Triggers_v2', verbose=False)
+        #     print("\nUpdating trigger database...")
+        #     DatabaseTools.update(results, 'Triggers_v2', verbose=False)
 
-        print("Done.\n")
+        # print("Done.\n")
 
 
         return 
