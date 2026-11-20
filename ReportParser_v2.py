@@ -231,7 +231,7 @@ def parse(filename=None):
 
         # print("Done.\n")
 
-
+        print("\nJob status update message received. Skipping database update.\n")
         return 
 
     # Parse the results messages
